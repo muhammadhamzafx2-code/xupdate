@@ -5,57 +5,48 @@ const admin = require("firebase-admin");
 const app = express();
 app.use(express.json());
 
-// 🔑 Load Firebase key from environment variable (Render)
+// ✅ Load Firebase key from ENV
 const serviceAccount = JSON.parse(process.env.FIREBASE_KEY);
-// fix newline issue
+
+// ✅ Fix newline issue
 serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
-// 📦 File to store tokens
 const TOKENS_FILE = "tokens.json";
 
-// 📥 Get saved tokens
+// get tokens
 function getTokens() {
   if (!fs.existsSync(TOKENS_FILE)) return [];
   return JSON.parse(fs.readFileSync(TOKENS_FILE));
 }
 
-// 💾 Save token API
+// save token
 app.post("/save-token", (req, res) => {
   const { token } = req.body;
 
-  if (!token) {
-    return res.status(400).send("No token provided");
-  }
+  if (!token) return res.send("No token");
 
   let tokens = getTokens();
 
   if (!tokens.includes(token)) {
     tokens.push(token);
-    fs.writeFileSync(TOKENS_FILE, JSON.stringify(tokens, null, 2));
-    console.log("New token saved");
-  } else {
-    console.log("Token already exists");
+    fs.writeFileSync(TOKENS_FILE, JSON.stringify(tokens));
+    console.log("Saved token");
   }
 
-  res.send("Token saved");
+  res.send("OK");
 });
 
-// 🔔 Send notification to all users
+// send notifications
 function sendNotifications() {
   const tokens = getTokens();
 
-  if (tokens.length === 0) {
-    console.log("No tokens found");
-    return;
-  }
-
   tokens.forEach(token => {
-    const message = {
-      token: token,
+    admin.messaging().send({
+      token,
       notification: {
         title: "Reminder",
         body: "Visit google.com"
@@ -65,27 +56,20 @@ function sendNotifications() {
           link: "https://www.google.com"
         }
       }
-    };
-
-    admin.messaging().send(message)
-      .then(() => console.log("Sent to:", token))
-      .catch(err => console.log("Error sending:", err));
+    })
+    .then(() => console.log("Sent"))
+    .catch(err => console.log(err));
   });
 }
 
-// ⏱️ Run every 1 hour
+// every 1 hour
 setInterval(sendNotifications, 3600000);
 
-// 👉 For testing (optional: send every 10 seconds)
+// test (optional)
 // setInterval(sendNotifications, 10000);
 
-// 🌐 Basic route
 app.get("/", (req, res) => {
-  res.send("Notification server is running");
+  res.send("Server running");
 });
 
-// 🚀 Start server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log("Server running on port", PORT);
-});
+app.listen(process.env.PORT || 3000);
