@@ -10,6 +10,11 @@ app.use(express.json());
 app.use(express.static(__dirname));
 
 // 🔑 Load Firebase key from ENV
+if (!process.env.FIREBASE_KEY) {
+  console.error("FIREBASE_KEY is missing!");
+  process.exit(1);
+}
+
 const serviceAccount = JSON.parse(process.env.FIREBASE_KEY);
 
 // fix newline issue
@@ -19,19 +24,22 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
-// 📦 Token storage
+// 📦 Token storage file
 const TOKENS_FILE = "tokens.json";
 
+// 📥 Get tokens
 function getTokens() {
   if (!fs.existsSync(TOKENS_FILE)) return [];
   return JSON.parse(fs.readFileSync(TOKENS_FILE));
 }
 
-// 💾 Save token
+// 💾 Save token endpoint
 app.post("/save-token", (req, res) => {
   const { token } = req.body;
 
-  if (!token) return res.send("No token");
+  if (!token) {
+    return res.status(400).send("No token provided");
+  }
 
   let tokens = getTokens();
 
@@ -39,12 +47,14 @@ app.post("/save-token", (req, res) => {
     tokens.push(token);
     fs.writeFileSync(TOKENS_FILE, JSON.stringify(tokens, null, 2));
     console.log("Saved token:", token);
+  } else {
+    console.log("Token already exists");
   }
 
   res.send("Token saved");
 });
 
-// 🔔 Send notifications
+// 🔔 Send notifications to all users
 function sendNotifications() {
   const tokens = getTokens();
 
@@ -54,7 +64,7 @@ function sendNotifications() {
   }
 
   tokens.forEach(token => {
-    admin.messaging().send({
+    const message = {
       token,
       notification: {
         title: "Reminder",
@@ -65,55 +75,21 @@ function sendNotifications() {
           link: "https://www.google.com"
         }
       }
-    })
-    .then(() => console.log("Sent to:", token))
-    .catch(err => console.log("Error:", err));
+    };
+
+    admin.messaging().send(message)
+      .then(() => console.log("Sent to:", token))
+      .catch(err => console.log("Error sending:", err));
   });
 }
 
-// ⏱️ Every 1 hour
+// ⏱️ Send every 1 hour
 setInterval(sendNotifications, 3600000);
 
-// 👉 For testing (optional)
-// setInterval(seconst express = require("express");
-const fs = require("fs");
-const admin = require("firebase-admin");
+// 👉 For testing (optional: 10 seconds)
+// setInterval(sendNotifications, 10000);
 
-const app = express();
-app.use(express.json());
-
-// ✅ Load Firebase key from ENV
-const serviceAccount = JSON.parse(process.env.FIREBASE_KEY);
-
-// ✅ Fix newline issue
-serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
-
-const TOKENS_FILE = "tokens.json";
-
-// get tokens
-function getTokens() {
-  if (!fs.existsSync(TOKENS_FILE)) return [];
-  return JSON.parse(fs.readFileSync(TOKENS_FILE));
-}
-
-// save token
-app.post("/save-token", (req, res) => {
-  const { token } = req.body;
-
-  if (!token) return res.send("No token");
-
-  let tokens = getTokens();
-
-  if (!tokens.includes(token)) {
-    tokens.push(token);
-    fs.writeFileSync(TOKENS_FILE, JSON.stringify(tokens));
-ndNotifications, 10000);
-
-// 🌐 Show index.html on homepage
+// 🌐 Serve homepage
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
