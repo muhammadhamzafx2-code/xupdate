@@ -26,7 +26,7 @@ window.start = async () => {
       vapidKey: "BOdPWGqwoqJuwousfsA9MKrOX-VnCwCb8al6PsvBAVpsRZarKn8SWEavtB4t0JMG_XubE39pT0LdOXJwic2epcw"
     });
 
-    await fetch("https://xupdate.onrender.com/save-token", {
+    await fetch("/save-token", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({ token })
