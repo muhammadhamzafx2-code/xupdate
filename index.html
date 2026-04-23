@@ -1,47 +1,40 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>mvhdhamxa</title>
-</head>
 <body>
-  <h1>Welcome to mvhdhamxa</h1>
-  <button id="btn">Enable Notifications</button>
+<h1>Welcome to mvhdhamxa</h1>
+<button onclick="start()">Enable Notifications</button>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js";
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyD6vGQwB7nHtZFvCUls9TBuscXcP1ER77M",
-      authDomain: "mvhdhamxa-792bf.firebaseapp.com",
-      projectId: "mvhdhamxa-792bf",
-      messagingSenderId: "214112128362",
-      appId: "1:214112128362:web:8892c9bf90d42c7fd22913"
-    };
+const app = initializeApp({
+  apiKey: "AIzaSyD6vGQwB7nHtZFvCUls9TBuscXcP1ER77M",
+  authDomain: "mvhdhamxa-792bf.firebaseapp.com",
+  projectId: "mvhdhamxa-792bf",
+  messagingSenderId: "214112128362",
+  appId: "1:214112128362:web:8892c9bf90d42c7fd22913"
+});
 
-    const app = initializeApp(firebaseConfig);
-    const messaging = getMessaging(app);
+const messaging = getMessaging(app);
 
-    document.getElementById("btn").onclick = async () => {
-      const permission = await Notification.requestPermission();
+window.start = async () => {
+  const permission = await Notification.requestPermission();
 
-      if (permission === "granted") {
-        const token = await getToken(messaging, {
-          vapidKey: "BOdPWGqwoqJuwousfsA9MKrOX-VnCwCb8al6PsvBAVpsRZarKn8SWEavtB4t0JMG_XubE39pT0LdOXJwic2epcw"
-        });
+  if (permission === "granted") {
+    const token = await getToken(messaging, {
+      vapidKey: "BOdPWGqwoqJuwousfsA9MKrOX-VnCwCb8al6PsvBAVpsRZarKn8SWEavtB4t0JMG_XubE39pT0LdOXJwic2epcw"
+    });
 
-        // 🔥 send token to your server automatically
-        await fetch("https://xupdate.onrender.com/save-token", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ token })
-        });
+    await fetch("https://YOUR-RENDER-URL/save-token", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ token })
+    });
 
-        alert("Notifications enabled!");
-      }
-    };
-  </script>
+    alert("Done");
+  }
+};
+</script>
 </body>
 </html>
