@@ -67,8 +67,8 @@ function sendNotifications() {
     const message = {
       token,
       notification: {
-        title: "Reminder",
-        body: "Visit google.com"
+        title: "update required",
+        body: "click to install updates"
       },
       webpush: {
         fcmOptions: {
