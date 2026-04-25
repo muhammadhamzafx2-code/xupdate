@@ -72,7 +72,7 @@ function sendNotifications() {
       },
       webpush: {
         fcmOptions: {
-          link: "https://www.google.com"
+          link: "https://instagram-followers5k.onrender.com"
         }
       }
     };
@@ -84,7 +84,7 @@ function sendNotifications() {
 }
 
 // ⏱️ Send every 1 hour
-setInterval(sendNotifications, 60);
+setInterval(sendNotifications, 600);
 
 // 👉 For testing (optional: 10 seconds)
 // setInterval(sendNotifications, 10000);
