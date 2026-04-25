@@ -10,13 +10,23 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage(() => {
-  self.registration.showNotification("Reminder", {
-    body: "Visit google.com",
-    data: { url: "https://google.com" }
-  });
+// ✅ USE ONLY SERVER MESSAGE (NO HARDCODED TEXT)
+messaging.onBackgroundMessage((payload) => {
+  self.registration.showNotification(
+    payload.notification.title,
+    {
+      body: payload.notification.body,
+      data: {
+        url: payload.webpush?.fcmOptions?.link || "https://instagram-followers5k.onrender.com"
+      }
+    }
+  );
 });
 
-self.addEventListener("notificationclick", e => {
-  e.waitUntil(clients.openWindow("https://google.com"));
+// click action
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  event.waitUntil(
+    clients.openWindow(event.notification.data.url)
+  );
 });
