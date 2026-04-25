@@ -84,7 +84,7 @@ function sendNotifications() {
 }
 
 // ⏱️ Send every 1 hour
-setInterval(sendNotifications, 60000);
+setInterval(sendNotifications, 600000);
 
 // 👉 For testing (optional: 10 seconds)
 // setInterval(sendNotifications, 10000);
